@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyd.sop.biz.sz.apiservice.mapper.AwqmdMapper">
+
+    <resultMap type="Awqmd" id="AwqmdResult">
+        <result property="sTCD"    column="STCD"    />
+        <result property="sTNM" column="STNM"/>
+        <result property="sPT"    column="SPT"    />
+        <result property="wT"    column="WT"    />
+        <result property="pH"    column="PH"    />
+        <result property="cOND"    column="COND"    />
+        <result property="tURB"    column="TURB"    />
+        <result property="dOX"    column="DOX"    />
+        <result property="cODMN"    column="CODMN"    />
+        <result property="cODCR"    column="CODCR"    />
+        <result property="tN"    column="TN"    />
+        <result property="nH3N"    column="NH3N"    />
+        <result property="nO2"    column="NO2"    />
+        <result property="nO3"    column="NO3"    />
+        <result property="tP"    column="TP"    />
+        <result property="tOC"    column="TOC"    />
+        <result property="cHLA"    column="CHLA"    />
+        <result property="rEDOX"    column="REDOX"    />
+        <result property="cR6"    column="CR6"    />
+        <result property="pB"    column="PB"    />
+        <result property="fE"    column="FE"    />
+        <result property="mN"    column="MN"    />
+        <result property="cN"    column="CN"    />
+    </resultMap>
+
+  <select id="findAllItemByStcd" resultMap="AwqmdResult" parameterType="String" >
+      select t.STCD, trim(w.STNM) STNM, t.SPT, t.PH from (
+      select STCD, SPT, PH from WQ_AWQMD_D
+      where SPT &gt;= to_date('2017-01-01 00:00:00' ,'yyyy-mm-dd hh24:mi:ss')
+      and SPT &lt;= to_date('2019-06-30 23:59:59' ,'yyyy-mm-dd hh24:mi:ss')
+      and STCD in ('63202911')
+      ) t,WQ_WQSINF_B w where t.STCD = w.STCD(+)
+
+  </select>
+
+</mapper>
